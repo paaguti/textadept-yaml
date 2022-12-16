@@ -5,7 +5,7 @@ Currently shows errors detected by `yamllint`
 
 ## Instalation
 
-1. Install `yamllint` from ... and make it available in the PATH
+1. Install `yamllint` from https://pypi.org/project/yamllint/ and make it available in the PATH
 2. Install this module under `~/.textadept/modules`
 
 ## TODO
