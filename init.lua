@@ -84,10 +84,12 @@ local function which(fname)
   local path=os.getenv("PATH")
   for dir in string.gmatch(path, "([^:]+)") do
     local fn=dir..'/'..fname
-    local f=io.open(fn,"r")
-    if f~=nil then
-      io.close(f)
-      return fn
+    local attr = lfs.attributes(fn)
+    if attr ~= nil then
+      local mode,perm=attr['mode'],attr['permissions']
+      if mode == 'file' and string.find(perm,'^r.x') ~= nil then
+        return fn
+      end
     end
   end
 end
