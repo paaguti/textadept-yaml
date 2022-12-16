@@ -1,7 +1,7 @@
 # textadept-yaml
 
-A pure Lua implementation of the original `textadept-yaml` module.
-Currently works on errors detected by `yamllint`
+A pure Lua implementation with much code from the original `textadept-yaml` module.
+Currently shows errors detected by `yamllint`
 
 ## Instalation
 
