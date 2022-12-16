@@ -16,6 +16,9 @@ local M = {}
 --   Jump to the anchor for the alias under the caret.
 module('_M.yaml')]]
 
+-- Initialise the snippets
+snippets.yaml = {}
+
 local lyaml = nil
 
 -- Returns the output of yamllint as a table of strings
