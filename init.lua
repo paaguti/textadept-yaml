@@ -56,12 +56,11 @@ events.connect(events.FILE_AFTER_SAVE, function()
   -- if ok then return end
   for _, v in ipairs(parse_result) do
     fname, line, col, cat, msg = v:match('^([.]+):(%d+):(%d+): ([^ ]+) (.+)$')
-    if cat == '[error]' then
-      if not line or not col then line, col, msg = 1, 1, errmsg end
-      buffer.annotation_text[line] = msg
-      buffer.annotation_style[line] = buffer:style_of_name(lexer.ERROR)
-      buffer:goto_pos(buffer:find_column(line, col))
-    end
+    local err_style =  cat == '[error]' and lexer.ERROR or lexer.DEFAULT
+    if not line or not col then line, col, msg = 1, 1, errmsg end
+    buffer.annotation_text[line] = msg
+    buffer.annotation_style[line] = buffer:style_of_name(err_style)
+    buffer:goto_pos(buffer:find_column(line, col))
   end
 end)
 
