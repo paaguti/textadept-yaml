@@ -55,7 +55,7 @@ events.connect(events.FILE_AFTER_SAVE, function()
   local parse_result = yamllint(buffer.filename)
   -- if ok then return end
   for _, v in ipairs(parse_result) do
-    fname, line, col, cat, msg = v:match('^([^:]+):(%d+):(%d+): ([^ ]+) (.+)$')
+    fname, line, col, cat, msg = v:match('^([.]+):(%d+):(%d+): ([^ ]+) (.+)$')
     if cat == '[error]' then
       if not line or not col then line, col, msg = 1, 1, errmsg end
       buffer.annotation_text[line] = msg
