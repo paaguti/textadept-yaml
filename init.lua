@@ -83,11 +83,20 @@ keys.yaml[CURSES and 'meta+&' or OSX and 'cmd+&' or 'ctrl+&'] = M.goto_anchor
 -- Initialise lyaml
 
 local function which(fname)
+  -- WIN32 support
+  local pathsep = WIN32 and "([^;]+)" or "([^:]+)"
+  local suffix = WIN32 and ".exe" or ""
+  local dirsep = WIN32 and "\\" or "/"
+  -- just in case, remove .exe in WIN32 environments
+  if WIN32 then
+    fname=string.gsub(fname,".exe$","")
+  end
   local path=os.getenv("PATH")
-  for dir in string.gmatch(path, "([^:]+)") do
-    local fn=dir..'/'..fname
+  for dir in string.gmatch(path, pathsep) do
+    local fn=dir..dirsep..fname..suffix
     local attr = lfs.attributes(fn)
     if attr ~= nil then
+      -- file exists
       local mode,perm=attr['mode'],attr['permissions']
       if mode == 'file' and string.find(perm,'^r.x') ~= nil then
         return fn
@@ -97,4 +106,5 @@ local function which(fname)
 end
 
 lyaml=which('yamllint')
+ui.statusbar_text = 'yamllint'.. (lyaml and " found " or " NOT ") .. "in PATH"
 return M
