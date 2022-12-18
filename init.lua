@@ -21,13 +21,16 @@ snippets.yaml = {}
 
 local lyaml = nil
 
+-- The flags passed to yamllint
+M.lyaml_flags=' -f parsable --no-warnings '
+
 -- Returns the output of yamllint as a table of strings
 -- @param fname: the file to lint
 -- @return outputof yamllint split in lines
 
 local function yamllint(fname)
   local result={}
-  local yamllint = assert(io.popen('yamllint -f parsable ' .. fname, 'r'))
+  local yamllint = assert(io.popen('yamllint'.. M.lyaml_flags.. fname, 'r'))
   local output = yamllint:read('*all')
   yamllint:close()
   for str in string.gmatch(output, "([^\n]+)") do
